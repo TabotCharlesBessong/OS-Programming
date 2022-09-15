@@ -12,7 +12,7 @@ int main () {
   }
   cout<<"Create directory successful: "<<endl;
 
-  bDir = RemoveDirectory(L"H:\\MERNSTACK2\\OS-Programming\\Dir1")
+  bDir = RemoveDirectory(L"H:\\MERNSTACK2\\OS-Programming\\Dir1");
 
   if(bDir == FALSE) {
     cout<<"Delete directory failed and error No: "<<GetLastError()<<endl;
