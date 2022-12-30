@@ -10,7 +10,7 @@ int myrand(int min, int max) {
 
 void lock(atomic_flag& m) {
   while (m.test_and_set())
-    ; // busy waiting
+    this_thread::sleep_for(chrono::milliseconds(8));
 }
 
 void unlock(atomic_flag& m) {
