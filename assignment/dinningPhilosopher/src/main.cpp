@@ -5,21 +5,19 @@
 using namespace std;
 
 int myrand(int min, int max) {
-  // generating a random food eater
   return rand()%(max-min)+min;
 }
 
-void lock(atomic<int>& m) {
-  while (m)
+void lock(atomic_flag& m) {
+  while (m.test_and_set())
     ; // busy waiting
-  m=1;
 }
 
-void unlock(atomic<int>& m) {
-  m=0;
+void unlock(atomic_flag& m) {
+  m.clear();
 }
 
-void phil(int ph, atomic<int>& ma, atomic<int>& mb) {
+void phil(int ph, atomic_flag& ma, atomic_flag& mb) {
   while(true) {
     int duration=myrand(1000, 2000);
     cout<<ph<<" thinks "<<duration<<"ms\n";
@@ -42,10 +40,14 @@ void phil(int ph, atomic<int>& ma, atomic<int>& mb) {
 }
 
 int main() {
-  cout<<"dp_5\n";
+  cout<<"dp_6\n";
   srand(time(nullptr));
 
-  atomic<int> m1{0}, m2{0}, m3{0}, m4{0};
+  atomic_flag m1, m2, m3, m4;
+  unlock(m1);
+  unlock(m2);
+  unlock(m3);
+  unlock(m4);
 
   thread t1([&] {phil(1, m1, m2);});
   thread t2([&] {phil(2, m2, m3);});
