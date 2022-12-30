@@ -1,3 +1,6 @@
+
+// This algorithm start executing processes with the shortest burst time  it can be both preemptive and non preemptive 
+
 #include<iostream>
 #include <algorithm>
 #include<iomanip>
